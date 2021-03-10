@@ -10,6 +10,29 @@ you can create a regex via the builder pattern. By calling `build()` on the rege
 
 If you want additional safety when creating patterns, turn on runtime assertions, to make sure the passed arguments are valid.
 
+## Example
+
+For example, this regex configuration
+
+```Java
+String pattern = new Regex()
+ .anyCharacter()
+ .character('c')
+ .whitespace()
+  .or(
+   new Regex()
+    .nOrMore(new Regex()
+     .anyDigit(),
+     3
+    ),
+   new Regex()
+   .character('G')
+  )
+.build();
+```
+
+will result in the regex `.c\s((\d){3,}|G)`, that will match for example `%c G`, but not `%c 23`.
+
 ## License and Copyright
  © Philip Jonas Franz
  
